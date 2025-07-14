@@ -14,7 +14,7 @@ export function RequisitionMineListView() {
         })
 
         if (!response.ok) {
-          throw new Error(response.status)
+          throw new Error('Request failed with status code ${response.status}.')
         }
 
         const jsonData = await response.json()
@@ -30,11 +30,15 @@ export function RequisitionMineListView() {
   }, [])
 
   if (loading) {
-    return <div>Loading requisitions...</div>
+    return (
+      <div>
+        <span class="loading loading-spinner loading-sm"></span>
+      </div>
+    )
   }
 
   if (error) {
-    return <div>Unexpected error while fetching requisitions: {error.message}</div>
+    return <div>Error fetching requisition data: {error}</div>
   }
 
   if (!requisitions?.results || requisitions.results.length === 0) {
