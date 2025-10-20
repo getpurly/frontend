@@ -2,7 +2,6 @@ import { create } from 'zustand'
 
 export const useUserStore = create((set) => ({
   userData: null,
-  userError: null,
   fetchUser: async () => {
     try {
       const response = await fetch('http://localhost:8000/api/v1/users/me/', {
@@ -10,22 +9,15 @@ export const useUserStore = create((set) => ({
         credentials: 'include',
       })
 
-      if (response.status === 403) {
-        window.location.href = 'http://localhost:8000/accounts/login/'
-        return
+      if (response.status === 200) {
+        const userData = await response.json()
+
+        set({ userData })
+      } else {
+        set({ userData: null })
       }
-
-      if (!response.ok) {
-        throw new Error('Request failed with status code ${response.status}.')
-      }
-
-      const userData = await response.json()
-
-      set({ userData })
     } catch (error) {
-      set({ userError: error.message })
-    } finally {
-      set({ loading: false })
+      set({ userData: null })
     }
   },
 }))
