@@ -6,9 +6,12 @@ import {
   redirect,
   Outlet,
 } from '@tanstack/react-router'
-import { NavBar } from './components/NavBar'
-import { RequisitionMineListView } from './components/RequisitionMineListView'
+
 import { useUserStore } from './stores/userStore'
+
+import { RequisitionDetailView } from './components/RequisitionDetailView'
+import { RequisitionMineListView } from './components/RequisitionMineListView'
+import { NavBar } from './components/NavBar'
 
 async function requireUser() {
   const { userData, fetchUser } = useUserStore.getState()
@@ -51,36 +54,75 @@ const indexRoute = createRoute({
   },
 })
 
-const reqListRoute = createRoute({
+export const requisitionsRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/requisitions/list',
+  path: '/requisitions',
+  component: () => <Outlet />,
+})
+
+export const requisitionMineListRoute = createRoute({
+  getParentRoute: () => requisitionsRoute,
+  path: '/',
   component: RequisitionMineListView,
 })
 
-const reqCreateRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/requisitions/create',
-  component: () => <div>TODO</div>,
+export const requisitionDetailRoute = createRoute({
+  getParentRoute: () => requisitionsRoute,
+  path: '$id',
+  component: RequisitionDetailView,
 })
 
-const addressListRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/addresses/list',
-  component: () => <div>TODO</div>,
+const requisitionCreateRoute = createRoute({
+  getParentRoute: () => requisitionsRoute,
+  path: 'create',
+  component: () => <div>TODO CREATE REQUISITIONS</div>,
 })
 
-const addressCreateRoute = createRoute({
+export const addressesRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/addresses/create',
-  component: () => <div>TODO</div>,
+  path: '/addresses',
+  component: () => <Outlet />,
+})
+
+export const addressesMineListRoute = createRoute({
+  getParentRoute: () => addressesRoute,
+  path: '/',
+  component: () => <div>TODO LIST ADDRESSES</div>,
+})
+
+export const addressDetailRoute = createRoute({
+  getParentRoute: () => addressesRoute,
+  path: '$id',
+  component: () => <div>TODO DETAIL ADDRESSES</div>,
+})
+
+export const addressCreateRoute = createRoute({
+  getParentRoute: () => addressesRoute,
+  path: 'create',
+  component: () => <div>TODO CREATE ADDRESSES</div>,
+})
+
+export const projectsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/projects',
+  component: () => <Outlet />,
+})
+
+export const projectsListRoute = createRoute({
+  getParentRoute: () => projectsRoute,
+  path: '/',
+  component: () => <div>TODO LIST PROJECTS</div>,
 })
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  reqListRoute,
-  reqCreateRoute,
-  addressListRoute,
-  addressCreateRoute,
+  requisitionsRoute.addChildren([
+    requisitionMineListRoute,
+    requisitionDetailRoute,
+    requisitionCreateRoute,
+  ]),
+  addressesRoute.addChildren([addressesMineListRoute, addressDetailRoute, addressCreateRoute]),
+  projectsRoute.addChildren([projectsListRoute]),
 ])
 
 export const router = createRouter({ routeTree })

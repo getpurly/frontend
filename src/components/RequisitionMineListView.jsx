@@ -1,5 +1,10 @@
+import { Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { Spinner } from './Spinner'
+
+import { requisitionDetailRoute } from '../router'
+
+import { ErrorAlert } from './shared/ErrorAlert'
+import { Spinner } from './shared/Spinner'
 
 export function RequisitionMineListView() {
   const [requisitions, setRequisitions] = useState(null)
@@ -14,12 +19,17 @@ export function RequisitionMineListView() {
           credentials: 'include',
         })
 
-        if (response.ok) {
-          const jsonData = await response.json()
+        const jsonData = await response.json()
 
+        if (response.status === 200) {
           setRequisitions(jsonData)
+          return
+        }
+
+        if (jsonData) {
+          throw new Error(jsonData.errors[0].detail)
         } else {
-          throw new Error('Request failed with status code ${response.status}.')
+          throw new Error(`HTTP ${response.status}`)
         }
       } catch (error) {
         setError(error.message)
@@ -35,7 +45,7 @@ export function RequisitionMineListView() {
   }
 
   if (error) {
-    return <div>Error fetching requisition data: {error}</div>
+    return <ErrorAlert message={error} />
   }
 
   if (!requisitions?.results || requisitions.results.length === 0) {
@@ -72,17 +82,25 @@ export function RequisitionMineListView() {
           <tbody>
             {requisitions.results.map((item) => (
               <tr key={item.id}>
-                <td>{item.id}</td>
+                <td>
+                  <Link
+                    className="link"
+                    to={requisitionDetailRoute.to}
+                    params={{ id: String(item.id) }}
+                  >
+                    {item.id}
+                  </Link>
+                </td>
                 <td>{item.name}</td>
-                <td>{item.external_reference}</td>
+                <td>{item.external_reference ? item.external_reference : '-'}</td>
                 <td>{item.status}</td>
-                <td>{item.project}</td>
+                <td>{item.project ? item.project.name : '-'}</td>
                 <td>{item.supplier}</td>
                 <td>{item.total_amount}</td>
                 <td>{item.currency}</td>
-                <td>{item.submitted_at}</td>
-                <td>{item.approved_at}</td>
-                <td>{item.rejected_at}</td>
+                <td>{item.submitted_at ? item.submitted_at : '-'}</td>
+                <td>{item.approved_at ? item.approved_at : '-'}</td>
+                <td>{item.rejected_at ? item.rejected_at : '-'}</td>
                 <td>{item.created_at}</td>
                 <td>{item.updated_at}</td>
               </tr>
