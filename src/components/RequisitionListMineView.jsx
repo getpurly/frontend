@@ -13,7 +13,7 @@ export function RequisitionListMineView() {
   }
 
   if (error) {
-    return <ErrorAlert message={error} />
+    return <ErrorAlert error={error} />
   }
 
   if (requisitions.results.length === 0) {

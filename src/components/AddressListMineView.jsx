@@ -13,7 +13,7 @@ export function AddressListMineView() {
   }
 
   if (error) {
-    return <ErrorAlert message={error} />
+    return <ErrorAlert error={error} />
   }
 
   if (addresses.results.length === 0) {

@@ -12,7 +12,7 @@ export function ProjectDetailView() {
   }
 
   if (error) {
-    return <ErrorAlert message={error} />
+    return <ErrorAlert error={error} />
   }
 
   return (

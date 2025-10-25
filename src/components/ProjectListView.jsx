@@ -13,7 +13,7 @@ export function ProjectListView() {
   }
 
   if (error) {
-    return <ErrorAlert message={error} />
+    return <ErrorAlert error={error} />
   }
 
   if (projects.results.length === 0) {
