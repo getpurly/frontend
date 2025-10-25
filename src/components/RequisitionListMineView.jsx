@@ -1,46 +1,14 @@
 import { Link } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
 
+import { useRequisitionMine } from '../hooks/requisitions'
 import { requisitionDetailRoute } from '../router'
-
 import { ErrorAlert } from './shared/ErrorAlert'
 import { Spinner } from './shared/Spinner'
 
-export function RequisitionMineListView() {
-  const [requisitions, setRequisitions] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+export function RequisitionListMineView() {
+  const { data: requisitions, isLoading, error } = useRequisitionMine()
 
-  useEffect(() => {
-    const fetchRequisitions = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/v1/requisitions/mine', {
-          method: 'GET',
-          credentials: 'include',
-        })
-
-        const jsonData = await response.json()
-
-        if (response.status === 200) {
-          setRequisitions(jsonData)
-          return
-        }
-
-        if (jsonData) {
-          throw new Error(jsonData.errors[0].detail)
-        } else {
-          throw new Error(`HTTP ${response.status}`)
-        }
-      } catch (error) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchRequisitions()
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return <Spinner />
   }
 
@@ -48,11 +16,11 @@ export function RequisitionMineListView() {
     return <ErrorAlert message={error} />
   }
 
-  if (!requisitions?.results || requisitions.results.length === 0) {
+  if (requisitions.results.length === 0) {
     return (
       <div>
-        <h1 className="mb-4 text-2xl font-semibold">My Requisitions</h1>
-        You haven't created any requisitions yet.
+        <h1 className="mb-4 text-2xl font-semibold">Projects</h1>
+        <p>No projects have been created yet.</p>
       </div>
     )
   }
