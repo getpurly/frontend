@@ -11,7 +11,7 @@ export function useAddressesMine() {
 
 export function useAddress(id) {
   return useQuery({
-    queryKey: ['address', 'detail'],
+    queryKey: ['address', id],
     queryFn: async () => fetchData(`addresses/${id}`),
   })
 }

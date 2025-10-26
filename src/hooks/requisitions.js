@@ -11,7 +11,7 @@ export function useRequisitionsMine() {
 
 export function useRequisition(id) {
   return useQuery({
-    queryKey: ['requisition', 'detail'],
+    queryKey: ['requisition', id],
     queryFn: async () => fetchData(`requisitions/${id}`),
   })
 }

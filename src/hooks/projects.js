@@ -11,7 +11,7 @@ export function useProjects() {
 
 export function useProject(id) {
   return useQuery({
-    queryKey: ['project', 'detail'],
+    queryKey: ['project', id],
     queryFn: async () => fetchData(`projects/${id}`),
   })
 }
