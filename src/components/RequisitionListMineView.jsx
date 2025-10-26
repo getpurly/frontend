@@ -1,12 +1,12 @@
 import { Link } from '@tanstack/react-router'
 
-import { useRequisitionMine } from '../hooks/requisitions'
+import { useRequisitionsMine } from '../hooks/requisitions'
 import { requisitionDetailRoute } from '../router'
 import { ErrorAlert } from './shared/ErrorAlert'
 import { Spinner } from './shared/Spinner'
 
 export function RequisitionListMineView() {
-  const { data: requisitions, isLoading, error } = useRequisitionMine()
+  const { data: requisitions, isLoading, error } = useRequisitionsMine()
 
   if (isLoading) {
     return <Spinner />

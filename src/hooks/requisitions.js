@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { fetchData } from '../api/client'
 
-export function useRequisitionMine() {
+export function useRequisitionsMine() {
   return useQuery({
     queryKey: ['requisitions', 'mine'],
     queryFn: async () => fetchData('requisitions/mine'),

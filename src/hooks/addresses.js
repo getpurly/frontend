@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { fetchData } from '../api/client'
 
-export function useAddressMine() {
+export function useAddressesMine() {
   return useQuery({
     queryKey: ['addresses', 'mine'],
     queryFn: async () => fetchData('addresses/mine'),

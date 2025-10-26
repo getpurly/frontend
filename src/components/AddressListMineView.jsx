@@ -1,12 +1,12 @@
 import { Link } from '@tanstack/react-router'
 
-import { useAddressMine } from '../hooks/addresses'
+import { useAddressesMine } from '../hooks/addresses'
 import { addressDetailRoute } from '../router'
 import { ErrorAlert } from './shared/ErrorAlert'
 import { Spinner } from './shared/Spinner'
 
 export function AddressListMineView() {
-  const { data: addresses, isLoading, error } = useAddressMine()
+  const { data: addresses, isLoading, error } = useAddressesMine()
 
   if (isLoading) {
     return <Spinner />
