@@ -34,9 +34,9 @@ async function requireUser() {
 
 function RootLayout() {
   return (
-    <div className="min-h-screen flex bg-base-300">
+    <div className="flex min-h-screen bg-base-200 text-white">
       <NavBar />
-      <main className="flex-1 p-6">
+      <main className="flex-1 ml-48 p-6 overflow-x-hidden">
         <Outlet />
       </main>
     </div>

@@ -2,8 +2,8 @@ import { Link } from '@tanstack/react-router'
 
 export function NavBar() {
   return (
-    <aside className="w-48 bg-base-100 shadow-md p-4 flex flex-col justify-between">
-      <ul className="menu menu-vertical w-full space-y-1">
+    <aside className="fixed top-0 left-0 h-screen w-48 bg-base-100 shadow-md p-4 flex flex-col justify-between">
+      <ul className="menu menu-vertical w-full space-y-1 overflow-y-auto flex-1">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -26,7 +26,7 @@ export function NavBar() {
           <Link to="/projects">List</Link>
         </li>
       </ul>
-      <ul className="menu menu-vertical w-full space-y-1 mt-6">
+      <ul className="menu menu-vertical w-full space-y-1">
         <li className="menu-title">Account</li>
         <li>
           <a href="http://localhost:8000/accounts/email/">Manage Email</a>
