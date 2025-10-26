@@ -1,68 +1,10 @@
 import { useRequisition } from '../hooks/requisitions'
 import { requisitionDetailRoute } from '../router'
+import { formatAmount, formatDate, formatPaymentTerm } from '../utils/formatters'
+import { RequisitionDetailBreadcrumb } from './RequisitionDetailBreadcrumb'
+import { RequisitionStatusBadge } from './RequisitionStatusBadge'
 import { ErrorAlert } from './shared/ErrorAlert'
 import { Spinner } from './shared/Spinner'
-
-function formatDate(date) {
-  if (!date) return '-'
-
-  try {
-    return new Date(date).toLocaleString()
-  } catch {
-    return date
-  }
-}
-
-function formatAmount(amount) {
-  try {
-    return new Number(amount).toLocaleString()
-  } catch {
-    return amount
-  }
-}
-
-function formatPaymentTerm(term) {
-  switch (term) {
-    case 'net_30':
-      return new String('Net 30')
-    case 'net_45':
-      return new String('Net 45')
-    case 'net_90':
-      return new String('Net 90')
-    default:
-      return term
-  }
-}
-
-function Status({ requisitionStatus }) {
-  let badgeType = ''
-  let status = ''
-
-  switch (requisitionStatus) {
-    case 'draft':
-      badgeType = 'info'
-      status = 'Draft'
-      break
-    case 'pending_approval':
-      badgeType = 'warning'
-      status = 'Pending Approval'
-      break
-    case 'rejected':
-      badgeType = 'error'
-      status = 'Rejected'
-      break
-    case 'approved':
-      badgeType = 'primary'
-      status = 'Approved'
-      break
-    default:
-      badgeType = 'primary'
-  }
-
-  return (
-    <div className={`badge badge-outline badge-${badgeType} px-4 py-3 font-semibold`}>{status}</div>
-  )
-}
 
 function Label({ name, value }) {
   return (
@@ -89,6 +31,7 @@ export function RequisitionDetailView() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
+      <RequisitionDetailBreadcrumb id={id} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-3xl font-semibold text-white tracking-tight">{requisition.name}</h1>
@@ -160,10 +103,10 @@ export function RequisitionDetailView() {
                           name="Quantity"
                           value={line.quantity != null ? line.quantity : '-'}
                         />
+                        <Label name="Unit Price" value={formatAmount(line.unit_price)} />
                         <span className="capitalize">
                           <Label name="Unit of Measure" value={line.unit_of_measure} />
                         </span>
-                        <Label name="Unit Price" value={line.unit_price} />
                       </>
                     ) : null}
                     <Label name="Payment Term" value={formatPaymentTerm(line.payment_term)} />
@@ -183,7 +126,7 @@ export function RequisitionDetailView() {
                 <h2 className="text-sm font-semibold text-neutral-400 uppercase tracking-wide">
                   Status
                 </h2>
-                <Status requisitionStatus={requisition.status} />
+                <RequisitionStatusBadge requisitionStatus={requisition.status} />
               </div>
 
               <div className="space-y-4">
