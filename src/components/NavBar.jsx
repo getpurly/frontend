@@ -29,7 +29,7 @@ export function NavBar() {
       <ul className="menu menu-vertical w-full space-y-1 mt-6">
         <li className="menu-title">Account</li>
         <li>
-          <a href="http://localhost:8000/accounts/email/">Change Email</a>
+          <a href="http://localhost:8000/accounts/email/">Manage Email</a>
         </li>
         <li>
           <a href="http://localhost:8000/accounts/password/change/">Change Password</a>

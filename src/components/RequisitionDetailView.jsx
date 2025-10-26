@@ -110,22 +110,7 @@ export function RequisitionDetailView() {
                   <Label name="Project" value={requisition.project?.name || '-'} />
                   <Label name="Supplier" value={requisition.supplier} />
                 </div>
-              </section>
-
-              <section className="space-y-4">
                 <Label name="Justification" value={requisition.justification} />
-              </section>
-
-              <section className="space-y-4">
-                <h2 className="text-sm font-semibold text-neutral-400 uppercase tracking-wide">
-                  Financial
-                </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-sm">
-                  <Label name="Total Amount" value={formatAmount(requisition.total_amount)} />
-                  <span className="uppercase">
-                    <Label name="Currency" value={requisition.currency} />
-                  </span>
-                </div>
               </section>
             </div>
           </div>
@@ -211,18 +196,33 @@ export function RequisitionDetailView() {
                   <Label name="Rejected" value={formatDate(requisition.rejected_at)} />
                   <Label name="Created" value={formatDate(requisition.created_at)} />
                   <Label name="Created By" value={requisition.created_by.username} />
-                  <Label name="Updated" value={formatDate(requisition.created_at)} />
+                  <Label name="Updated" value={formatDate(requisition.updated_at)} />
                   <Label name="Updated By" value={requisition.updated_by.username} />
                 </div>
               </div>
 
               <div className="space-y-4 pt-4 border-t border-base-400">
-                <button className="btn btn-outline btn-primary w-full rounded-xl text-sm font-semibold">
+                <button className="btn btn-primary w-full rounded-field text-sm font-semibold">
                   Submit for Approval
                 </button>
-                <button className="btn btn-outline w-full rounded-xl text-sm font-semibold">
+                <button className="btn btn-outline w-full rounded-field text-sm font-semibold">
                   Edit
                 </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="card bg-base-100 border border-base-300">
+            <div className="card-body space-y-4">
+              <h2 className="text-sm font-semibold text-neutral-400 uppercase tracking-wide">
+                Financial
+              </h2>
+
+              <div className="grid grid-cols-2 gap-6 text-sm">
+                <Label name="Total Amount" value={formatAmount(requisition.total_amount)} />
+                <span className="uppercase">
+                  <Label name="Currency" value={requisition.currency} />
+                </span>
               </div>
             </div>
           </div>
