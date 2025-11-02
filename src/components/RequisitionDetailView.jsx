@@ -10,7 +10,7 @@ import { Spinner } from './shared/Spinner'
 
 export function RequisitionDetailView() {
   const { id } = requisitionDetailRoute.useParams()
-  const { data: requisition, isLoading, error } = useRequisition(id)
+  const { data, isLoading, error } = useRequisition(id)
 
   if (isLoading) {
     return <Spinner />
@@ -25,7 +25,7 @@ export function RequisitionDetailView() {
       <RequisitionDetailBreadcrumb id={id} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold text-white tracking-tight">{requisition.name}</h1>
+          <h1 className="text-3xl font-semibold text-white tracking-tight">{data.name}</h1>
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -37,13 +37,13 @@ export function RequisitionDetailView() {
                   Summary
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-sm">
-                  <Label name="ID" value={requisition.id} />
-                  <Label name="Owner" value={requisition.owner?.username} />
-                  <Label name="External Ref" value={requisition.external_reference} />
-                  <Label name="Project" value={requisition.project?.name || '-'} />
-                  <Label name="Supplier" value={requisition.supplier} />
+                  <Label name="ID" value={data.id} />
+                  <Label name="Owner" value={data.owner?.username} />
+                  <Label name="External Ref" value={data.external_reference} />
+                  <Label name="Project" value={data.project?.name || '-'} />
+                  <Label name="Supplier" value={data.supplier} />
                 </div>
-                <Label name="Justification" value={requisition.justification} />
+                <Label name="Justification" value={data.justification} />
               </section>
             </div>
           </div>
@@ -51,11 +51,11 @@ export function RequisitionDetailView() {
             <div className="card-body space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-sm font-semibold text-neutral-400 uppercase tracking-wide">
-                  Line Items ({requisition.lines?.length})
+                  Line Items ({data.lines?.length})
                 </h2>
               </div>
-              {requisition.lines.map((line) => (
-                <RequisitionLineCard key={line.id} line={line} currency={requisition.currency} />
+              {data.lines.map((line) => (
+                <RequisitionLineCard key={line.id} line={line} currency={data.currency} />
               ))}
             </div>
           </div>
@@ -67,20 +67,20 @@ export function RequisitionDetailView() {
                 <h2 className="text-sm font-semibold text-neutral-400 uppercase tracking-wide">
                   Status
                 </h2>
-                <RequisitionStatusBadge requisitionStatus={requisition.status} />
+                <RequisitionStatusBadge requisitionStatus={data.status} />
               </div>
               <div className="space-y-4">
                 <h2 className="text-sm font-semibold text-neutral-400 uppercase tracking-wide">
                   Activity
                 </h2>
                 <div className="space-y-4 text-sm">
-                  <Label name="Submitted" value={formatDate(requisition.submitted_at)} />
-                  <Label name="Approved" value={formatDate(requisition.approved_at)} />
-                  <Label name="Rejected" value={formatDate(requisition.rejected_at)} />
-                  <Label name="Created" value={formatDate(requisition.created_at)} />
-                  <Label name="Created By" value={requisition.created_by.username} />
-                  <Label name="Updated" value={formatDate(requisition.updated_at)} />
-                  <Label name="Updated By" value={requisition.updated_by.username} />
+                  <Label name="Submitted" value={formatDate(data.submitted_at)} />
+                  <Label name="Approved" value={formatDate(data.approved_at)} />
+                  <Label name="Rejected" value={formatDate(data.rejected_at)} />
+                  <Label name="Created" value={formatDate(data.created_at)} />
+                  <Label name="Created By" value={data.created_by.username} />
+                  <Label name="Updated" value={formatDate(data.updated_at)} />
+                  <Label name="Updated By" value={data.updated_by.username} />
                 </div>
               </div>
               <div className="space-y-4 pt-4 border-t border-base-400">
@@ -99,8 +99,8 @@ export function RequisitionDetailView() {
                 Financial
               </h2>
               <div className="grid grid-cols-2 gap-6 text-sm">
-                <Label name="Total Amount" value={formatAmount(requisition.total_amount)} />
-                <Label name="Currency" value={requisition.currency} valueClassName="uppercase" />
+                <Label name="Total Amount" value={formatAmount(data.total_amount)} />
+                <Label name="Currency" value={data.currency} valueClassName="uppercase" />
               </div>
             </div>
           </div>

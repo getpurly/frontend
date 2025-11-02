@@ -2,16 +2,23 @@ import { useQuery } from '@tanstack/react-query'
 
 import { fetchData } from '../api/client'
 
-export function useRequisitionsMine() {
+export function useRequisitionsMine({ pageIndex }) {
   return useQuery({
-    queryKey: ['requisitions', 'mine'],
-    queryFn: async () => fetchData('requisitions/mine'),
+    queryKey: ['requisitions', 'mine', pageIndex],
+    queryFn: async () => {
+      const page = new URLSearchParams()
+
+      page.set('page', String(pageIndex))
+
+      return fetchData(`requisitions/mine?${page.toString()}`)
+    },
+    keepPreviousData: true,
   })
 }
 
 export function useRequisition(id) {
   return useQuery({
     queryKey: ['requisition', id],
-    queryFn: async () => fetchData(`requisitions/${id}`),
+    queryFn: async () => fetchData(`requisitions/${id.toString()}`),
   })
 }

@@ -28,3 +28,18 @@ export function formatPaymentTerm(term) {
       return term
   }
 }
+
+export function formatStatus(status) {
+  switch (status) {
+    case 'draft':
+      return 'Draft'
+    case 'pending_approval':
+      return 'Pending Approval'
+    case 'rejected':
+      return 'Rejected'
+    case 'approved':
+      return 'Approved'
+    default:
+      return status
+  }
+}

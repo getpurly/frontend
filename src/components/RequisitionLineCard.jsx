@@ -7,7 +7,7 @@ import { Label } from './shared/Label'
 
 export function RequisitionLineCard({ line, currency }) {
   const [activeTab, setActiveTab] = useState('detail')
-  const { data: address, isLoading, error } = useAddress(line.ship_to.id)
+  const { data, isLoading, error } = useAddress(line.ship_to.id)
 
   if (isLoading) {
     return (
@@ -55,17 +55,17 @@ export function RequisitionLineCard({ line, currency }) {
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs sm:text-sm">
-          <Label name="Name" value={address.name} />
-          <Label name="Address Code" value={address.address_code} />
-          <Label name="Attention" value={address.attention} />
-          <Label name="Phone" value={address.phone} />
-          <Label name="Street 1" value={address.street1} />
-          <Label name="Street 2" value={address.street2} />
-          <Label name="City" value={address.city} />
-          <Label name="State" value={address.state} />
-          <Label name="Postal Code" value={address.zip_code} />
-          <Label name="Country" value={address.country} />
-          <Label name="Delivery Instructions" value={address.delivery_instructions} />
+          <Label name="Name" value={data.name} />
+          <Label name="data Code" value={data.address_code} />
+          <Label name="Attention" value={data.attention} />
+          <Label name="Phone" value={data.phone} />
+          <Label name="Street 1" value={data.street1} />
+          <Label name="Street 2" value={data.street2} />
+          <Label name="City" value={data.city} />
+          <Label name="State" value={data.state} />
+          <Label name="Postal Code" value={data.zip_code} />
+          <Label name="Country" value={data.country} />
+          <Label name="Delivery Instructions" value={data.delivery_instructions} />
         </div>
       )}
       <div className="flex justify-end pt-4">
