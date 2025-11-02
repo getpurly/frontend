@@ -1,9 +1,9 @@
 import { useRequisition } from '../hooks/requisitions'
 import { requisitionDetailRoute } from '../router'
 import { formatAmount, formatDate } from '../utils/formatters'
-import { RequisitionDetailBreadcrumb } from './RequisitionDetailBreadcrumb'
 import { RequisitionLineCard } from './RequisitionLineCard'
 import { RequisitionStatusBadge } from './RequisitionStatusBadge'
+import { Breadcrumb } from './shared/Breadcrumb'
 import { ErrorAlert } from './shared/ErrorAlert'
 import { Label } from './shared/Label'
 import { Spinner } from './shared/Spinner'
@@ -22,7 +22,7 @@ export function RequisitionDetailView() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <RequisitionDetailBreadcrumb id={id} />
+      <Breadcrumb id={id} object="requisition" />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-3xl font-semibold text-white tracking-tight">{data.name}</h1>

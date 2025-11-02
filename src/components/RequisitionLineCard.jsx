@@ -22,7 +22,7 @@ export function RequisitionLineCard({ line, currency }) {
   }
 
   return (
-    <div className="rounded-md bg-base-200 border border-base-400 p-2 space-y-4 relative">
+    <div className="rounded-md bg-base-300 border border-base-400 p-2 space-y-4 relative">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between">
         <div>
           <div className="text-sm font-semibold text-white">Line {line.line_number}</div>

@@ -13,6 +13,7 @@ import { formatAmount, formatDate, formatStatus } from '../utils/formatters'
 import { ErrorAlert } from './shared/ErrorAlert'
 import { Pagination } from './shared/Pagination'
 import { Spinner } from './shared/Spinner'
+import { TableSearch } from './shared/TableSearch'
 
 export function RequisitionListMineView() {
   const [globalFilter, setGlobalFilter] = useState('')
@@ -89,13 +90,7 @@ export function RequisitionListMineView() {
     <div>
       <h1 className="mb-4 text-2xl font-semibold">My Requisitions</h1>
       <div className="mb-3 flex items-center gap-2">
-        <input
-          type="text"
-          className="input"
-          placeholder="Search..."
-          value={globalFilter}
-          onChange={handleSearch}
-        />
+        <TableSearch searchValue={globalFilter} onValueChange={handleSearch} />
         <div className="ml-auto flex items-center gap-2">
           <Pagination
             pageIndex={pageIndex}
