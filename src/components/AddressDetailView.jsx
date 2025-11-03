@@ -36,7 +36,7 @@ export function AddressDetailView() {
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-sm">
                   <Label name="ID" value={data.id} />
-                  <Label name="Owner" value={data.owner?.username} />
+                  <Label name="Owner" value={data.owner.username} />
                   <Label name="Address Code" value={data.address_code} />
                   <Label name="Attention" value={data.attention} />
                   <Label name="Phone" value={data.phone} />

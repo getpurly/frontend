@@ -42,7 +42,6 @@ export function AddressListMineView() {
         },
       },
       { header: 'Name', accessorKey: 'name' },
-
       { header: 'Address Code', accessorKey: 'address_code' },
       { header: 'Attention', accessorKey: 'attention' },
       { header: 'Phone', accessorKey: 'phone' },
