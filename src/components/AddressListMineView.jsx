@@ -89,7 +89,7 @@ export function AddressListMineView() {
 
   return (
     <div>
-      <h1 className="mb-4 text-2xl font-semibold">Projects</h1>
+      <h1 className="mb-4 text-2xl font-semibold">My Addresses</h1>
       <div className="mb-3 flex items-center gap-2">
         <TableSearch searchValue={globalFilter} onValueChange={handleSearch} />
         <div className="ml-auto flex items-center gap-2">

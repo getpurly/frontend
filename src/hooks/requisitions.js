@@ -10,7 +10,7 @@ export function useRequisitionsMine({ pageIndex }) {
 
       page.set('page', String(pageIndex))
 
-      return fetchData(`requisitions/mine?${page.toString()}`)
+      return fetchData(`requisitions/mine/?${page.toString()}`)
     },
     keepPreviousData: true,
   })

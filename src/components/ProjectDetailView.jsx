@@ -40,7 +40,16 @@ export function ProjectDetailView() {
                   <Label name="Start Date" value={data.start_date} />
                   <Label name="End Date" value={data.end_date} />
                 </div>
-                <Label name="Description" value={data.description} />
+              </section>
+            </div>
+          </div>
+          <div className="card bg-base-100 border border-base-300">
+            <div className="card-body space-y-8">
+              <section className="space-y-4">
+                <h2 className="text-sm font-semibold text-neutral-400 uppercase tracking-wide">
+                  Description
+                </h2>
+                <Label name="" value={data.description} />
               </section>
             </div>
           </div>
