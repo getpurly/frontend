@@ -1,7 +1,7 @@
-export function ErrorAlert({ error }) {
+export function AlertError({ message }) {
   return (
     <div role="alert" className="alert alert-error alert-outline">
-      <span>Error: {error.message}</span>
+      <span>Error: {message}</span>
     </div>
   )
 }

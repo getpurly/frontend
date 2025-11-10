@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { fetchData } from '../api/client'
+import { fetchData, submitData } from '../api/client'
 
 export function useAddressesMine({ pageIndex }) {
   return useQuery({
@@ -20,5 +20,11 @@ export function useAddress(id) {
   return useQuery({
     queryKey: ['address', id],
     queryFn: async () => fetchData(`addresses/${id.toString()}`),
+  })
+}
+
+export function useCreateAddress() {
+  return useMutation({
+    mutationFn: async (payload) => submitData(`addresses/`, payload),
   })
 }

@@ -3,8 +3,8 @@ import { requisitionDetailRoute } from '../router'
 import { formatAmount, formatDate } from '../utils/formatters'
 import { RequisitionLineCard } from './RequisitionLineCard'
 import { RequisitionStatusBadge } from './RequisitionStatusBadge'
+import { AlertError } from './shared/AlertError'
 import { Breadcrumb } from './shared/Breadcrumb'
-import { ErrorAlert } from './shared/ErrorAlert'
 import { Label } from './shared/Label'
 import { Spinner } from './shared/Spinner'
 
@@ -17,7 +17,7 @@ export function RequisitionDetailView() {
   }
 
   if (error) {
-    return <ErrorAlert error={error} />
+    return <AlertError message={error.message} />
   }
 
   return (

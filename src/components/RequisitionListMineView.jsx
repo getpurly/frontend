@@ -10,7 +10,7 @@ import React, { useMemo, useState } from 'react'
 import { useRequisitionsMine } from '../hooks/requisitions'
 import { requisitionDetailRoute } from '../router'
 import { formatAmount, formatDate, formatStatus } from '../utils/formatters'
-import { ErrorAlert } from './shared/ErrorAlert'
+import { AlertError } from './shared/AlertError'
 import { Pagination } from './shared/Pagination'
 import { Spinner } from './shared/Spinner'
 import { TableSearch } from './shared/TableSearch'
@@ -52,7 +52,6 @@ export function RequisitionListMineView() {
       { header: 'Approved', accessorFn: (row) => formatDate(row.approved_at) || '-' },
       { header: 'Rejected', accessorFn: (row) => formatDate(row.rejected_at) || '-' },
       { header: 'Created', accessorFn: (row) => formatDate(row.created_at) || '-' },
-      { header: 'Updated', accessorFn: (row) => formatDate(row.updated_at) || '-' },
     ],
     []
   )
@@ -74,7 +73,7 @@ export function RequisitionListMineView() {
   }
 
   if (error) {
-    return <ErrorAlert error={error} />
+    return <AlertError message={error.message} />
   }
 
   if (data.results.length === 0) {
@@ -101,7 +100,7 @@ export function RequisitionListMineView() {
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table table-fixed w-full">
           <thead>
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>
@@ -119,7 +118,7 @@ export function RequisitionListMineView() {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="truncate whitespace-nowrap overflow-hidden">
                     {flexRender(
                       cell.column.columnDef.cell ?? cell.column.columnDef.header,
                       cell.getContext()

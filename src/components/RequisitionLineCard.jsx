@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { useAddress } from '../hooks/addresses'
 import { formatAmount, formatPaymentTerm } from '../utils/formatters'
-import { ErrorAlert } from './shared/ErrorAlert'
+import { AlertError } from './shared/AlertError'
 import { Label } from './shared/Label'
 
 export function RequisitionLineCard({ line, currency }) {
@@ -18,7 +18,7 @@ export function RequisitionLineCard({ line, currency }) {
   }
 
   if (error) {
-    return <ErrorAlert error={error} />
+    return <AlertError message={error.message} />
   }
 
   return (

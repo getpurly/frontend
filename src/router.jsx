@@ -7,6 +7,7 @@ import {
   redirect,
 } from '@tanstack/react-router'
 
+import { AddressCreateView } from './components/AddressCreateView'
 import { AddressDetailView } from './components/AddressDetailView'
 import { AddressListMineView } from './components/AddressListMineView'
 import { NavBar } from './components/NavBar'
@@ -14,13 +15,15 @@ import { ProjectDetailView } from './components/ProjectDetailView'
 import { ProjectListView } from './components/ProjectListView'
 import { RequisitionDetailView } from './components/RequisitionDetailView'
 import { RequisitionListMineView } from './components/RequisitionListMineView'
+import { useTokenStore } from './stores/tokenStore'
 import { useUserStore } from './stores/userStore'
 
-async function requireUser() {
+async function userCheck() {
   const { userData, fetchUser } = useUserStore.getState()
+  const { fetchToken } = useTokenStore.getState()
 
   if (!userData) {
-    await fetchUser()
+    await fetchUser().then(fetchToken)
   }
 
   const { userData: user } = useUserStore.getState()
@@ -44,7 +47,7 @@ function RootLayout() {
 }
 
 const rootRoute = createRootRoute({
-  beforeLoad: requireUser,
+  beforeLoad: userCheck,
   component: RootLayout,
 })
 
@@ -53,6 +56,7 @@ const indexRoute = createRoute({
   path: '/',
   component: function Index() {
     const userData = useUserStore((state) => state.userData)
+
     return <h2>Hello, {userData.username}</h2>
   },
 })
@@ -102,7 +106,7 @@ export const addressDetailRoute = createRoute({
 export const addressCreateRoute = createRoute({
   getParentRoute: () => addressRoute,
   path: 'create',
-  component: () => <div>TODO CREATE ADDRESSES</div>,
+  component: AddressCreateView,
 })
 
 export const projectRoute = createRoute({

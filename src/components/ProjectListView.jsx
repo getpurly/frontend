@@ -10,7 +10,7 @@ import React, { useMemo, useState } from 'react'
 import { useProjects } from '../hooks/projects'
 import { projectDetailRoute } from '../router'
 import { formatDate } from '../utils/formatters'
-import { ErrorAlert } from './shared/ErrorAlert'
+import { AlertError } from './shared/AlertError'
 import { Pagination } from './shared/Pagination'
 import { Spinner } from './shared/Spinner'
 import { TableSearch } from './shared/TableSearch'
@@ -46,7 +46,6 @@ export function ProjectListView() {
       { header: 'Start Date', accessorKey: 'start_date' },
       { header: 'End Date', accessorKey: 'end_date' },
       { header: 'Created', accessorFn: (row) => formatDate(row.created_at) || '-' },
-      { header: 'Updated', accessorFn: (row) => formatDate(row.updated_at) || '-' },
     ],
     []
   )
@@ -69,7 +68,7 @@ export function ProjectListView() {
   }
 
   if (error) {
-    return <ErrorAlert error={error} />
+    return <AlertError message={error.message} />
   }
 
   if (data.results.length === 0) {
@@ -96,7 +95,7 @@ export function ProjectListView() {
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table table-fixed w-full">
           <thead>
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>
@@ -114,7 +113,7 @@ export function ProjectListView() {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="truncate whitespace-nowrap overflow-hidden">
                     {flexRender(
                       cell.column.columnDef.cell ?? cell.column.columnDef.header,
                       cell.getContext()

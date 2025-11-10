@@ -10,7 +10,7 @@ import React, { useMemo, useState } from 'react'
 import { useAddressesMine } from '../hooks/addresses'
 import { addressDetailRoute } from '../router'
 import { formatDate } from '../utils/formatters'
-import { ErrorAlert } from './shared/ErrorAlert'
+import { AlertError } from './shared/AlertError'
 import { Pagination } from './shared/Pagination'
 import { Spinner } from './shared/Spinner'
 import { TableSearch } from './shared/TableSearch'
@@ -52,7 +52,6 @@ export function AddressListMineView() {
       { header: 'ZIP Code', accessorKey: 'zip_code' },
       { header: 'Country', accessorKey: 'country' },
       { header: 'Created', accessorFn: (row) => formatDate(row.created_at) || '-' },
-      { header: 'Updated', accessorFn: (row) => formatDate(row.updated_at) || '-' },
     ],
     []
   )
@@ -75,7 +74,7 @@ export function AddressListMineView() {
   }
 
   if (error) {
-    return <ErrorAlert error={error} />
+    return <AlertError message={error.message} />
   }
 
   if (data.results.length === 0) {
@@ -102,7 +101,7 @@ export function AddressListMineView() {
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table table-fixed w-full">
           <thead>
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>
@@ -120,7 +119,7 @@ export function AddressListMineView() {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="truncate whitespace-nowrap overflow-hidden">
                     {flexRender(
                       cell.column.columnDef.cell ?? cell.column.columnDef.header,
                       cell.getContext()

@@ -1,8 +1,8 @@
 import { useProject } from '../hooks/projects'
 import { projectDetailRoute } from '../router'
 import { formatDate } from '../utils/formatters'
+import { AlertError } from './shared/AlertError'
 import { Breadcrumb } from './shared/Breadcrumb'
-import { ErrorAlert } from './shared/ErrorAlert'
 import { Label } from './shared/Label'
 import { Spinner } from './shared/Spinner'
 
@@ -15,7 +15,7 @@ export function ProjectDetailView() {
   }
 
   if (error) {
-    return <ErrorAlert error={error} />
+    return <AlertError message={error.message} />
   }
 
   return (

@@ -1,21 +1,14 @@
 import { create } from 'zustand'
 
+import { fetchData } from '../api/client'
+
 export const useUserStore = create((set) => ({
   userData: null,
   fetchUser: async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/users/me/', {
-        method: 'GET',
-        credentials: 'include',
-      })
+      const userData = await fetchData('users/me/')
 
-      if (response.status === 200) {
-        const userData = await response.json()
-
-        set({ userData })
-      } else {
-        set({ userData: null })
-      }
+      set({ userData })
     } catch (error) {
       set({ userData: null })
     }

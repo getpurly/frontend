@@ -1,26 +1,30 @@
 import { useAddress } from '../hooks/addresses'
 import { addressDetailRoute } from '../router'
+import { useFlashStore } from '../stores/flashStore'
 import { formatDate } from '../utils/formatters'
+import { AlertError } from './shared/AlertError'
+import { AlertSuccess } from './shared/AlertSuccess'
 import { Breadcrumb } from './shared/Breadcrumb'
-import { ErrorAlert } from './shared/ErrorAlert'
 import { Label } from './shared/Label'
 import { Spinner } from './shared/Spinner'
 
 export function AddressDetailView() {
   const { id } = addressDetailRoute.useParams()
   const { data, isLoading, error } = useAddress(id)
+  const flash = useFlashStore((state) => state.flash)
 
   if (isLoading) {
     return <Spinner />
   }
 
   if (error) {
-    return <ErrorAlert error={error} />
+    return <AlertError message={error.message} />
   }
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <Breadcrumb id={id} object="address" />
+      {flash.message && flash.recordId == id && <AlertSuccess message={flash.message} />}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-3xl font-semibold text-white tracking-tight">{data.name}</h1>
